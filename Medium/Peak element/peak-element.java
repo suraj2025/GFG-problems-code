@@ -52,17 +52,19 @@ class Solution
 	public int peakElement(int[] arr,int n)
     {
        //add code here.
-       int peek=-1;
-       int i;
-       for(i=0;i<n-1;i++){
-           if(arr[i]>arr[i+1]){
-               return i;
-               
-           }
+        int i =0;
+       int j = n-1;
+       int ans = -1;
+       while(i <= j){
+           int mid = i+(j-i)/2;
+           if((mid == 0 || arr[mid] > arr[mid-1]) && (mid == n-1 || arr[mid] > arr[mid+1])){
+                return mid;
+            }
+           if(mid != n-1 && arr[mid] <= arr[mid+1]){
+               ans = mid+1;
+               i = mid+1;
+           }else j = mid-1;
        }
-      if(i==n-1){
-          peek=n-1;;
-      }
-      return peek;
+       return ans;
     }
 }
