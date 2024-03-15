@@ -49,20 +49,19 @@ class Solution
     //Function to merge the arrays.
     public static void merge(long arr1[], long arr2[], int n, int m) 
     {
-        // code here 
-        int c=n-1;
-        for(int i=0;i<m;i++){
-        // long a=arr1[c];
-            if(c<0){
-                break;
+        // code here
+        int left=n-1;
+        int right=0;
+        while(left>=0 && right<m){
+            if(arr1[left] > arr2[right]){
+                long temp=arr1[left];
+                arr1[left]=arr2[right];
+                arr2[right]=temp;
+                left--;
+                right++;
             }
-            if(arr2[i]<arr1[c]){
-                long temp=arr1[c];
-                arr1[c]=arr2[i];
-                arr2[i]=temp;
-                c--;
-                
-            }
+            else break;
+            
         }
         Arrays.sort(arr1);
         Arrays.sort(arr2);
