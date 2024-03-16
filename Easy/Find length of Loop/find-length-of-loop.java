@@ -75,29 +75,46 @@ class Node
 
 class Solution
 {
+   
     //Function to find the length of a loop in the linked list.
     static int countNodesinLoop(Node head)
     {
         //Add your code here.
-          if(head==null) return 0;
-        HashSet<Node>set=new HashSet<>();
-         Node curr=head;
-         while(curr!=null){
-             if(set.contains(curr)){
-               int   count=1;
-                Node temp=curr.next;
-                while(temp!=curr){
-                    count++;
-                    temp=temp.next;
-                }
-                return count;
-                  
-                 
-                 
-             }
-             set.add(curr);
-             curr=curr.next;
-         }
-         return 0;
+        Node slow=head;
+        Node fast=head;
+        Node m;
+        if(head.next==head){
+            return 1;
+        }
+        if(head.next==null){
+            return 0;
+        }
+        while(true){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(fast==null|| fast.next==null){
+                return 0;
+            }
+            if(slow==fast){
+                break;
+            }
+        }
+        slow=head;
+        while(slow!=fast){
+            slow=slow.next;
+            fast=fast.next;
+            
+        }
+       
+        m=slow.next;
+      
+        int count=1;
+        while(m!=slow){
+            count++;
+            m=m.next;
+            
+        }
+        
+        return count;
     }
 }
