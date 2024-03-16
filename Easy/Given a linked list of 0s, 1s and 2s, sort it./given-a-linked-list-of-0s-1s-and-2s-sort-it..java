@@ -83,29 +83,43 @@ class Solution
     //Function to sort a linked list of 0s, 1s and 2s.
     static Node segregate(Node head)
     {
-        // add your code here
-        if(head.next==null){
+        
+        if (head == null || head.next == null) {
             return head;
         }
-         ArrayList<Integer> al = new ArrayList<>();
-        
-        Node temp = head;
-        while(temp != null){
-            al.add(temp.data);
-            temp = temp.next;
+
+        // Pointers for three types of nodes
+        Node zeroHead = new Node(0);
+        Node oneHead = new Node(0);
+        Node twoHead = new Node(0);
+
+        Node zeroTail = zeroHead;
+        Node oneTail = oneHead;
+        Node twoTail = twoHead;
+
+        // Traverse the linked list and segregate nodes based on their data
+        Node current = head;
+        while (current != null) {
+            if (current.data == 0) {
+                zeroTail.next = current;
+                zeroTail = zeroTail.next;
+            } else if (current.data == 1) {
+                oneTail.next = current;
+                oneTail = oneTail.next;
+            } else {
+                twoTail.next = current;
+                twoTail = twoTail.next;
+            }
+            current = current.next;
         }
-        
-        Collections.sort(al);
-        
-        Node ansHead = new Node(al.get(0));
-        Node t = ansHead;
-        for(int i=1; i<al.size(); i++){
-            Node cur = new Node(al.get(i));
-            t.next = cur;
-            t = cur;
-        }
-        
-        return ansHead;
+
+        // Connect tails of each type of node
+        zeroTail.next = (oneHead.next != null) ? oneHead.next : twoHead.next;
+        oneTail.next = twoHead.next;
+        twoTail.next = null;
+
+        // Return the head of the sorted linked list
+        return zeroHead.next;
     }
 }
 
