@@ -39,11 +39,18 @@ class GFG {
 
 //User function Template for Java
 class Solution {
+    public void pushData(Stack<Integer> st, int x){
+        if(st.isEmpty()){
+            st.push(x);
+            return;
+        }
+        int top=st.pop();
+        pushData(st,x);
+        st.push(top);
+        
+    }
     public Stack<Integer> insertAtBottom(Stack<Integer> st, int x) {
-         String ns="";
-        while(!st.empty())
-        ns=st.pop()+" "+ns;
-        System.out.println(x+" "+ns);
+         pushData(st,x);
         return st;
     }
 }
