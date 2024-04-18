@@ -32,6 +32,10 @@ class GFG
 
 //User function template for JAVA
 
+
+
+//User function template for JAVA
+
 class Solution
 {
     //Function to find two repeated elements.
