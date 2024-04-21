@@ -97,6 +97,10 @@ class GFG{
 
 //User function Template for Java
 
+
+
+//User function Template for Java
+
 class Solution{
     //Function to partition the array around the range such 
     //that array is divided into three parts.
