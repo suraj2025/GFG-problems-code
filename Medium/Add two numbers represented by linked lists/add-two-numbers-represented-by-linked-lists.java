@@ -32,8 +32,8 @@ class GfG{
             int n = sc.nextInt();
             int val = sc.nextInt();
             
-            Node first = new Node(val);
-            Node tail = first;
+            Node num1 = new Node(val);
+            Node tail = num1;
             for(int i=0; i<n-1; i++)
             {
                 val = sc.nextInt();
@@ -44,8 +44,8 @@ class GfG{
             int m = sc.nextInt();
             val = sc.nextInt();
             
-            Node second = new Node(val);
-            tail = second;
+            Node num2 = new Node(val);
+            tail = num2;
             for(int i=0; i<m-1; i++)
             {
                 val = sc.nextInt();
@@ -54,13 +54,15 @@ class GfG{
             }
             
             Solution g = new Solution();
-            Node res = g.addTwoLists(first, second);
+            Node res = g.addTwoLists(num1, num2);
             printList(res);
         }
     }
 }
 
 // } Driver Code Ends
+
+
 
 
 /* node for linked list
@@ -79,45 +81,63 @@ class Node {
 
 class Solution{
     //Function to add two numbers represented by linked list.
-    static Node addTwoLists(Node first, Node second){
+    static Node addTwoLists(Node l1, Node l2){
         // code here
         // return head of sum list
-           first = reverseList(first);
-        second = reverseList(second);
-        Node dummy = new Node(0);
-        Node temp = dummy;
-        int carry = 0;
-        while(first != null || second != null || carry == 1){
-            int sum = 0;
-            if(first != null){
-                sum += first.data;
-                first = first.next;
-            }
-            if(second != null){
-                sum += second.data;
-                second = second.next;
-            }
-            
-            sum += carry;
-            carry = sum / 10;
-            Node noo = new Node(sum % 10);
-            temp.next = noo;
-            temp = temp.next;
+        Stack<Integer> s1=new Stack<Integer>();
+        Stack<Integer> s2=new Stack<Integer>();
+        Node res=null;
+        while (l1 != null)
+        {
+            s1.push(l1.data);
+            l1=l1.next;
         }
-        dummy = reverseList(dummy.next);
-        return dummy;
+        while (l2 !=null)
+        {
+            s2.push(l2.data);
+            l2=l2.next;
+        }
+        int c=0;
+        while (!s1.isEmpty() || !s2.isEmpty())
+        {     
+            int a=0;
+            int b=0;  
+            if (!s1.isEmpty())
+            {
+                a=s1.pop();
+            }
+            if (!s2.isEmpty())
+            {
+                b=s2.pop();
+            }
+            int t=a+b+c;
+            Node tmp=new Node(t%10);
+            c=t /10;
+            if (res==null)
+            {
+                res=tmp;
+            }
+            else
+            {
+                tmp.next=res;
+                res=tmp;
+            }
+        }
+        if(c!=0)
+        {
+            Node tmp=new Node(c);
+            tmp.next=res;
+            res=tmp;
+        }
+        while (res!=null && res.data==0)
+        {
+            res=res.next;
+        }
+        if (res!=null)
+        {
+            return res;
+        }
+        Node ans=new Node(0);
+        return ans;
     }
-    
-    
-    public static Node reverseList(Node head)
-    {
-        
-        if(head == null || head.next == null) return head;
-        Node newHead = reverseList(head.next);
-        Node front = head.next;
-        front.next = head;
-        head.next = null;
-        return newHead;
-    }
-    
 }
