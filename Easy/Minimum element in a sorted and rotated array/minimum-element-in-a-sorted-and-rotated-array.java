@@ -33,14 +33,21 @@ public class GFG
 
 class Solution
 {
-    int findMin(int arr[], int n)
+    int findMin(int nums[], int n)
     {
         //complete the function here
-        int s=0,e=n-1;
-        int min=Math.min(arr[s++],arr[e--]);
-        while(s<=e){
-            min=Math.min(min,Math.min(arr[s++],arr[e--]));
-            
+        int l=0,h=n-1;
+        int min=Integer.MAX_VALUE;
+        while(l<=h){
+            int mid=(l+h)/2;
+            if(nums[mid]>=nums[l]){
+                min=Math.min(min,nums[l]);
+                l=mid+1;
+            }
+            else{
+                min=Math.min(min,nums[mid]);
+                h=mid-1;
+            }
         }
         return min;
     }
