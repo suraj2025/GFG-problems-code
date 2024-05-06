@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out=new PrintWriter(System.out);
         int tc = Integer.parseInt(br.readLine().trim());
         while (tc-- > 0) {
             String[] inputLine;
@@ -21,8 +22,9 @@ public class Main {
             }
 
             int ans = new Solution().findMaxSum(arr, n);
-            System.out.println(ans);
+            out.println(ans);
         }
+        out.close();
     }
 }
 // } Driver Code Ends
@@ -31,20 +33,19 @@ public class Main {
 //User function Template for Java
 
 class Solution {
-    int maxSum(int idx,int arr[],int dp[]){
-        if(idx==0) return arr[0];
-        // dp[0]=arr[0];
-        if(idx<0) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        int pick=arr[idx]+maxSum(idx-2,arr,dp);
-        int notPick=0+maxSum(idx-1,arr,dp);
-        return dp[idx]=Math.max(pick,notPick);
-    }
+   
     int findMaxSum(int arr[], int n) {
         // code here
-        int dp[]=new int[n];
-        Arrays.fill(dp,-1);
-        return maxSum(n-1,arr,dp);
-        
+        int p1=0;
+        int p2=arr[0];
+        for(int i=1;i<n;i++){
+            int pick=arr[i];
+            if(i>1) pick+=p1;
+            int notPick=0+p2;
+            int curr=Math.max(pick,notPick);
+            p1=p2;
+            p2=curr;
+        }
+        return p2;
     }
 }
