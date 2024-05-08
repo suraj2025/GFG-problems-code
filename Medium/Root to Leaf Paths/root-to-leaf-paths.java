@@ -172,26 +172,24 @@ class Node
 */
 
 class Solution {
-   
-        public static void rootToLeaf(Node root,ArrayList<ArrayList<Integer>> res,ArrayList<Integer> path){
-            if(root==null) return;
-            path.add(root.data);
-            if(root.left==null&&root.right==null){
-                // printPath(path);
-                res.add(new ArrayList<>(path));
-            }
-            else{
-                rootToLeaf(root.left,res,path);
-                rootToLeaf(root.right,res,path);
-            }
-            path.remove(path.size()-1);
+    public static void find(Node root,ArrayList<Integer> list,ArrayList<ArrayList<Integer>> ans){
+        if(root == null)return;
+        list.add(root.data);
+        if(root.left == null && root.right == null){
+            ans.add(new ArrayList<>(list));
         }
-        public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        else{
+            find(root.left,list,ans);
+            find(root.right,list,ans);
+        }
+        list.remove(list.size()-1);
+    }
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
         // code here
-            ArrayList<ArrayList<Integer>> res=new ArrayList<>();
-            ArrayList<Integer> path=new ArrayList<>();
-            rootToLeaf(root,res,path);
-            return res;
-        }
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        find(root,list,ans);
+        return ans;
+    }
 }
         
