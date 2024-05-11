@@ -50,34 +50,53 @@ class Solution{
     
    
     // Function for finding maximum and value pair
-    public static int lenOfLongSubarr (int Arr[], int N, int k) {
+    public static int lenOfLongSubarr (int a[], int n, int k) {
         //Complete the function
-        HashMap<Integer, Integer> prefixSums = new HashMap<>();
-        // Initializing the prefix sum and count of subarrays
-        int preSum = 0;
-        int count = 0;
-        // Iterating through the array
-        for (int i = 0; i < N; i++) {
-            // Adding the current element to the prefix sum
-            preSum += Arr[i];
-            // If prefix sum is equal to k, increment count
-            if (preSum == k) {
-                count=i+1;;
+        Map<Long, Integer> preSumMap = new HashMap<>();
+        long sum = 0;
+        int maxLen = 0;
+        preSumMap.put((long)0,-1);
+        for (int i = 0; i < n; i++) {
+            //calculate the prefix sum till index i:
+            sum += a[i];
+
+            // if the sum = k, update the maxLen:
+            // if (sum == k) {
+            //     maxLen = Math.max(maxLen, i + 1);
+            // }
+
+            // calculate the sum of remaining part i.e. x-k:
+            long rem = sum - k;
+
+            //Calculate the length and update maxLen:
+            if (preSumMap.containsKey(rem)) {
+                int len = i - preSumMap.get(rem);
+                maxLen = Math.max(maxLen, len);
             }
-            // If there exists a prefix sum preSum - k, add its frequency to count
-            if (!prefixSums.containsKey(preSum)) {
-                // count += prefixSums.get(preSum - k);
-            prefixSums.put(preSum, i);
+
+            //Finally, update the map checking the conditions:
+            if (!preSumMap.containsKey(sum)) {
+                preSumMap.put(sum, i);
             }
-            if(prefixSums.containsKey(preSum-k)){
-                count=Math.max(count,i-prefixSums.get(preSum-k));
-            }
-            // Update the frequency of the current prefix sum
-            
         }
-        // Return the count of subarrays
-        return count;
+
+        return maxLen;
     }
+    // public static int lenOfLongSubarr (int A[], int N, int K) {
+    //     //Complete the function
+    //     int res=0;
+    //     for(int i=0;i<N;i++){
+    //         int sum=0;
+    //         for(int j=i;j<N;j++){
+    //             sum+=A[j];
+    //             if(sum==K){
+    //                 res=Math.max(res,j-i+1);
+    //             }
+    //             if(sum>=K) break;
+    //         }
+    //     }
+    //     return res;
+    // }
     
     
 }
