@@ -58,22 +58,38 @@ class GFG {
 class Solution {
     public static ArrayList<Integer> Solve(int n, int[] nums) {
         // code here
-        int compare=n/3;
-        ArrayList<Integer> a= new ArrayList<>();
-        HashMap<Integer,Integer> map=new HashMap<>();
-        for(int num:nums){
-            map.put(num,map.getOrDefault(num,0)+1);
-        }
-        for(Map.Entry<Integer,Integer> e:map.entrySet()){
-            if(e.getValue()>compare){
-                a.add(e.getKey());
+        int ele1=0;
+        int ele2=0;
+        int c1=0;
+        int c2=0;
+        ArrayList<Integer> res=new ArrayList<>();
+        for(int i=0;i<nums.length;i++){
+            if(c1==0&& ele2!=nums[i]){
+                c1=1;
+                ele1=nums[i];
+            }
+            else if(c2==0&& ele1!=nums[i]){
+                c2=1;
+                ele2=nums[i];
+            }
+            else if(ele1==nums[i]) c1++;
+            else if(ele2==nums[i]) c2++;
+            else{
+                c1--;
+                c2--;
             }
         }
-        if(a.size()==0){
-            a.add(-1);
-            return a;
+
+        int cnt=0;
+        int cnt2=0;
+        for(int num:nums){
+            if(num==ele1) cnt++;
+            else if(num==ele2) cnt2++;
         }
-        return a;
+        if(cnt>nums.length/3) res.add(ele1);
+        if(cnt2>nums.length/3) res.add(ele2);
+        if(res.size()==0) res.add(-1);
+        return res;
     }
 }
         
