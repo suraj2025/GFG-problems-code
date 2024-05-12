@@ -29,35 +29,23 @@ class MaxLenZeroSumSub
 
 class GfG
 {
-    int maxLen(int Arr[], int N)
+    int maxLen(int arr[], int n)
     {
         // Your code here
-        int k=0;
-        HashMap<Integer, Integer> prefixSums = new HashMap<>();
-        // Initializing the prefix sum and count of subarrays
-        
-        int preSum = 0;
-        int count = 0;
-        // Iterating through the array
-        for (int i = 0; i < N; i++) {
-            // Adding the current element to the prefix sum
-            preSum += Arr[i];
-            // If prefix sum is equal to k, increment count
-            if (preSum == k) {
-                count=i+1;;
+        int sum=0;
+        int max=Integer.MIN_VALUE;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        map.put(0,-1);
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(map.containsKey(sum)){
+                max=Math.max(max,i-map.get(sum));
             }
-            // If there exists a prefix sum preSum - k, add its frequency to count
-            if (!prefixSums.containsKey(preSum)) {
-                // count += prefixSums.get(preSum - k);
-            prefixSums.put(preSum, i);
+            else{
+                map.put(sum,i);
             }
-            if(prefixSums.containsKey(preSum-k)){
-                count=Math.max(count,i-prefixSums.get(preSum-k));
-            }
-            // Update the frequency of the current prefix sum
-            
         }
-        // Return the count of subarrays
-        return count;
+        if(max<0) return 0;
+        return max;
     }
 }
