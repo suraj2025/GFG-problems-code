@@ -52,7 +52,8 @@ class Pair {
 
 class Solve {
     Pair getFloorAndCeil(int[] arr, int n, int x) {
-        Pair p = new Pair(-1, -1);
+        // code here
+          Pair p = new Pair(-1, -1);
         p.floor = Integer.MIN_VALUE;
         p.ceil = Integer.MAX_VALUE;
         
@@ -73,8 +74,7 @@ class Solve {
         }
         
         return p;
+        
     }
 }
-
-
 
