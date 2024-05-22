@@ -35,28 +35,32 @@ class Driver
 
 class GFG 
 { 
-    static double medianOfArrays(int n, int m, int a[], int b[]) 
+    static double medianOfArrays(int n1, int n2, int a[], int b[]) 
     {
         // Your Code Here
-         int arr[]=new int[n+m];
-        for(int i=0;i<a.length;i++)
-        {
-            arr[i]=a[i];
+        
+        //if n1 is bigger swap the arrays:
+        if (n1 > n2) return medianOfArrays(n2,n1,b, a);
+
+        int n = n1 + n2; //total length
+        int left = (n1 + n2 + 1) / 2; //length of left half
+        //apply binary search:
+        int low = 0, high = n1;
+        while (low <= high) {
+            int mid1 = (low + high) / 2;
+            int mid2 = left - mid1;
+            //calculate l1, l2, r1 and r2;
+            int l1 = (mid1 > 0) ? a[mid1 - 1] : Integer.MIN_VALUE;
+            int l2 = (mid2 > 0) ? b[mid2 - 1] : Integer.MIN_VALUE;
+            int r1 = (mid1 < n1) ? a[mid1] : Integer.MAX_VALUE;
+            int r2 = (mid2 < n2) ? b[mid2] : Integer.MAX_VALUE;
+
+            if (l1 <= r2 && l2 <= r1) {
+                if (n % 2 == 1) return Math.max(l1, l2);
+                else return ((double) (Math.max(l1, l2) + Math.min(r1, r2))) / 2.0;
+            } else if (l1 > r2) high = mid1 - 1;
+            else low = mid1 + 1;
         }
-        for(int i=0;i<b.length;i++)
-        {
-            arr[i+a.length]=b[i];
-        }
-        Arrays.sort(arr);
-        if(arr.length%2!=0)
-        {
-           int temp1=arr.length/2;
-            return arr[temp1];
-        }
-       
-            double temp2=arr[arr.length/2];
-            double temp3=arr[(arr.length/2)-1];
-            double result=(temp2+temp3)/2;
-            return result;
+        return 0; //dummy statement
     }
 }
