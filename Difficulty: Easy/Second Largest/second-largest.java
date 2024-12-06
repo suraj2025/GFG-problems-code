@@ -15,6 +15,8 @@ public class Main {
             Solution ob = new Solution();
             int ans = ob.getSecondLargest(arr);
             System.out.println(ans);
+
+            System.out.println("~");
         }
     }
 }
@@ -27,14 +29,21 @@ public class Main {
 class Solution {
     public int getSecondLargest(int[] arr) {
         // Code Here
-        int max1=-1,max2=-1;
-        for(int num:arr){
-            if(num>max1){
-                max2=max1;
-                max1=num;
-            }
-            else if(num!=max1&&num>max2) max2=num;
+        
+        int li=0;
+        int max=-1;
+        for(int i=1;i<arr.length;i++){
+            if(arr[li]<arr[i]) li=i;
         }
-        return max2;
+        
+        for(int i=0;i<arr.length;i++){
+            if(i!=li&&arr[i]!=arr[li]&&max<arr[i]){
+                
+            max=arr[i];
+            }
+        }
+        
+        
+        return max;
     }
 }
