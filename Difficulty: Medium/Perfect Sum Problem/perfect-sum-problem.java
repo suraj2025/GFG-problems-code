@@ -1,70 +1,50 @@
-//{ Driver Code Starts
-//Initial Template for Java
+class Solution {
+    // Function to calculate the number of subsets with a given sum
+    int helper(int[] nums, int sum,int idx){
+        if (idx == 0) {
+            if (sum == 0 && nums[0] == 0) return 2;  // {} and {0}
+            if (sum == 0 || sum == nums[0]) return 1; // {} or {nums[0]}
+            return 0;
+        }
 
-import java.io.*;
-import java.util.*;
-class GfG
-{
-    public static void main(String args[])
-        {
-            Scanner sc = new Scanner(System.in);
-            int t = sc.nextInt();
-            while(t-->0)
-                {
-                    int n = sc.nextInt();
-                    int sum = sc.nextInt();
-                    int arr[] = new int[n];
-                    for(int i = 0;i<n;i++)
-                    arr[i] = sc.nextInt();
+        // Exclude current element
+        int exclude = helper(nums, sum, idx - 1);
+
+        // Include current element (if it doesn't exceed sum)
+        int include = 0;
+        if (nums[idx] <= sum) {
+            include = helper(nums, sum - nums[idx], idx - 1);
+        }
+
+        return exclude + include;
+    }
+    public int perfectSum(int[] nums, int target) {
+        // code here
+        int n=nums.length;
+        int dp[]=new int[target+1];
+        for(int idx=0;idx<n;idx++){
+            for(int sum=target;sum>=0;sum--){
+                if (idx == 0) {
+                     if (sum == 0 && nums[0] == 0) dp[sum]= 2;  // {} and {0}
+                     else if (sum == 0 || sum == nums[0]) dp[sum]= 1; // {} or {nums[0]}
+                }
+                else{
                     
-                    Solution ob = new Solution();
-                    System.out.println(ob.perfectSum(arr,n,sum));
+                // Exclude current element
+                int exclude = dp[sum];
+
+                // Include current element (if it doesn't exceed sum)
+                int include = 0;
+                if (nums[idx] <= sum) {
+                    include = dp[sum - nums[idx]];
                 }
-        }
-}    
-// } Driver Code Ends
-
-
-class Solution{
-    
-    // int isSubsetSum(int N, int arr[], int sum){
-    //     // code here
         
-    // }
-
-	public int perfectSum(int arr[],int N, int sum) 
-	{ 
-	    // Your code goes here
-	    arr = Arrays.stream(arr)
-            .boxed()
-            .sorted(Comparator.reverseOrder())
-            .mapToInt(Integer::intValue)
-            .toArray();
-
-	     int dp[] = new int[sum + 1];
-        
-        // Initialize dp for sum 0
-        
-            dp[0] = 1;
-        
-        if (arr[0] <= sum) {
-            dp[arr[0]] = 1;
-        }
-        
-        // Fill dp table
-        for (int i = 1; i < N; i++) {
-            int curr[]=new int[sum+1];
-            for (int k = 0; k <= sum; k++) {
-                int notPick = dp[k];
-                int pick = 0;
-                if (k >= arr[i]) {
-                    pick = dp[k - arr[i]];
+                dp[sum]=exclude + include;
                 }
-                curr[k] = (pick + notPick)%((int)1e9+7);
+                
             }
-            dp=curr;
         }
+        return dp[target];
         
-        return dp[sum];
-	} 
+    }
 }
